@@ -15,8 +15,6 @@ public class GroupStageBuilder extends AbstractStageBuilder<GroupSpecifications,
     @Override
     public GroupStage build(final GroupSpecifications specifications) {
         return
-            new GroupStage(
-                specifications
-            );
+            new GroupStage();
     }
 }

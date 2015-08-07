@@ -15,6 +15,6 @@ public class FilterStageBuilder extends AbstractStageBuilder<FilterSpecification
     @Override
     public FilterStage build(final FilterSpecifications specifications) {
         return
-            new FilterStage(specifications);
+            new FilterStage();
     }
 }

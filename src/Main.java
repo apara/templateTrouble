@@ -21,8 +21,8 @@ public class Main {
 
         //*** THESE TWO LINES DO NOT COMPILE, cannot add specific builders to collection ***
         //
-        builders.add(new FilterStageBuilder());
-        builders.add(new GroupStageBuilder());
+        //builders.add(new FilterStageBuilder());
+        //builders.add(new GroupStageBuilder());
 
         final Collection<Stage>
             result =
