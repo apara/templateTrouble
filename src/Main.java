@@ -21,8 +21,6 @@ public class Main {
             builders =
                 new LinkedList<>();
 
-        //*** THESE TWO LINES DO NOT COMPILE, cannot add specific builders to collection ***
-        //
         builders.add(new FilterStageBuilder());
         builders.add(new GroupStageBuilder());
 
