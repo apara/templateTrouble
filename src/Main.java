@@ -1,8 +1,6 @@
 import api.Specifications;
 import api.Stage;
 import api.StageBuilder;
-import builder.FilterStageBuilder;
-import builder.GroupStageBuilder;
 import specification.BasicFilterSpecifications;
 import specification.BasicGroupSpecifications;
 
@@ -17,12 +15,12 @@ public class Main {
 
         //Create the builder list
         //
-        final Collection<? extends StageBuilder<? extends Specifications,? extends Stage>>
+        final Collection<StageBuilder<Specifications,?>>
             builders =
                 new LinkedList<>();
 
-        builders.add(new FilterStageBuilder());
-        builders.add(new GroupStageBuilder());
+        //builders.add(new FilterStageBuilder());
+        //builders.add(new GroupStageBuilder());
 
 
         final Collection<Stage>
@@ -35,32 +33,32 @@ public class Main {
                     )
                 );
 
-        System.out.println("Hello World!");
+        System.out.println("Created stages: " + result.size());
     }
 
 
-    static Collection<Stage> build(final Collection<StageBuilder<Specifications,?>> builders,  final Collection <Specifications> specs) {
+    static Collection<Stage> build(final Collection<StageBuilder<Specifications,?>> builders,  final Collection <Specifications> specifications) {
         return
-            specs
+            specifications
                 .stream()
                 .map(
-                    specifications ->
+                    spec ->
                         builders
                             .stream()
                             .filter(
                                 builder ->
                                     builder
-                                        .canBuild(specifications)
+                                        .canBuild(spec)
                             )
                             .findFirst()
                             .orElseThrow(
                                 () ->
                                     new RuntimeException(
-                                        "Builder for not found for " + specifications
+                                        "Builder not found for " + spec
                                     )
                             )
                             .build(
-                                specifications
+                                spec
                             )
                 )
                 .collect(
