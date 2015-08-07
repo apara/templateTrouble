@@ -1,7 +1,6 @@
 package builder;
 
 import specification.GroupSpecifications;
-import stage.BasicGroupStage;
 import stage.GroupStage;
 
 /**
@@ -16,7 +15,7 @@ public class GroupStageBuilder extends AbstractStageBuilder<GroupSpecifications,
     @Override
     public GroupStage build(final GroupSpecifications specifications) {
         return
-            new BasicGroupStage(
+            new GroupStage(
                 specifications
             );
     }

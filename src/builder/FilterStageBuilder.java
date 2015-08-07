@@ -1,7 +1,6 @@
 package builder;
 
 import specification.FilterSpecifications;
-import stage.BasicFilterStage;
 import stage.FilterStage;
 
 /**
@@ -16,6 +15,6 @@ public class FilterStageBuilder extends AbstractStageBuilder<FilterSpecification
     @Override
     public FilterStage build(final FilterSpecifications specifications) {
         return
-            new BasicFilterStage(specifications);
+            new FilterStage(specifications);
     }
 }
