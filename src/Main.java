@@ -1,6 +1,8 @@
 import api.Specifications;
 import api.Stage;
 import api.StageBuilder;
+import builder.FilterStageBuilder;
+import builder.GroupStageBuilder;
 import specification.FilterSpecifications;
 import specification.GroupSpecifications;
 
@@ -17,12 +19,12 @@ public class Main {
         //
         final Collection<StageBuilder<Specifications,?>>
             builders =
-                new LinkedList<>();
+                new LinkedList<StageBuilder<Specifications,?>>();
 
         //*** THESE TWO LINES DO NOT COMPILE, cannot add specific builders to collection ***
         //
-        //builders.add(new FilterStageBuilder());
-        //builders.add(new GroupStageBuilder());
+        builders.add(new FilterStageBuilder());
+        builders.add(new GroupStageBuilder());
 
         final Collection<Stage>
             result =
