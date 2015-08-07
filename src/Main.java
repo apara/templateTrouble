@@ -3,8 +3,8 @@ import api.Stage;
 import api.StageBuilder;
 import builder.FilterStageBuilder;
 import builder.GroupStageBuilder;
-import specification.BasicFilterSpecifications;
-import specification.BasicGroupSpecifications;
+import specification.FilterSpecifications;
+import specification.GroupSpecifications;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,8 +31,8 @@ public class Main {
                 build(
                     builders,
                     Arrays.asList(
-                        new BasicFilterSpecifications(),
-                        new BasicGroupSpecifications()
+                        new FilterSpecifications(),
+                        new GroupSpecifications()
                     )
                 );
 

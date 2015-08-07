@@ -3,7 +3,7 @@ package specification;
 import api.Specifications;
 
 /**
- * Created by aparansky on 8/6/15.
+ * Created by aparansky on 8/7/15.
  */
-public interface FilterSpecifications extends Specifications {
+public class FilterSpecifications implements Specifications {
 }
