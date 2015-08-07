@@ -17,9 +17,9 @@ public class Main {
 
         //Create the builder list
         //
-        final Collection<StageBuilder<Specifications,?>>
+        final Collection<StageBuilder<? extends Specifications,? extends Stage>>
             builders =
-                new LinkedList<StageBuilder<Specifications,?>>();
+                new LinkedList<>();
 
         //*** THESE TWO LINES DO NOT COMPILE, cannot add specific builders to collection ***
         //
@@ -40,7 +40,7 @@ public class Main {
     }
 
 
-    static Collection<Stage> build(final Collection<StageBuilder<Specifications,?>> builders,  final Collection <Specifications> specifications) {
+    static Collection<Stage> build(final Collection<StageBuilder<? extends Specifications,? extends Stage>> builders,  final Collection <? extends Specifications> specifications) {
         return
             specifications
                 .stream()
