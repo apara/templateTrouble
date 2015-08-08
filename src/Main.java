@@ -49,8 +49,8 @@ public class Main {
     }
 
     static
-    <STAGE extends Stage, SPEC extends Specification, BUILDER extends StageBuilder<? extends SPEC, ? extends STAGE>>
-    Collection<? extends STAGE> build(final Collection<? super BUILDER> builders, final Collection <? super SPEC> specifications) {
+    <STAGE extends Stage, SPEC extends Specification>
+    Collection<? extends Stage> build(final Collection<? extends StageBuilder<? super SPEC, ? super STAGE>> builders, final Collection <SPEC> specifications) {
         return
             specifications
                 .stream()
@@ -60,7 +60,8 @@ public class Main {
                             .stream()
                             .filter(
                                 builder ->
-                                    builder.canBuild(specification)
+                                    builder
+                                        .canBuild(specification)
                             )
                             .findFirst()
                             .orElseThrow(
