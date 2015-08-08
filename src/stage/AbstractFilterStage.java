@@ -10,4 +10,8 @@ public class AbstractFilterStage<SPEC extends Specification> implements Stage {
     public AbstractFilterStage(final SPEC specification) {
         this.specification = specification;
     }
+
+    public SPEC getSpecification() {
+        return specification;
+    }
 }
