@@ -34,10 +34,8 @@ public class Main {
         builders.add(filterStageBuilder);
         builders.add(groupStageBuilder);
 
-        addBuilder(builders, filterStageBuilder);
-        addBuilder(builders, groupStageBuilder);
 
-        final Collection<Stage>
+        final Collection<? extends Stage>
             result =
                 build(
                     builders,
@@ -49,15 +47,6 @@ public class Main {
 
         System.out.println("Created stages: " + result.size());
     }
-
-    //<T extends Juicy<? super T>> List<Juice<? super T>> squeezeSuperExtends(List<? extends T> fruits);
-
-    public static
-    <T extends StageBuilder<? extends Specification, ? extends Stage>>
-    void addBuilder(final Collection<? super T> collection, final T builder) {
-        collection.add(builder);
-    }
-
 
     static
     <STAGE extends Stage, SPEC extends Specification, BUILDER extends StageBuilder<? extends SPEC, ? extends STAGE>>

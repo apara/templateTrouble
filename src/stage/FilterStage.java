@@ -1,9 +1,9 @@
 package stage;
 
-import api.Stage;
+import specification.FilterSpecification;
 
-/**
- * Created by aparansky on 8/6/15.
- */
-public class FilterStage implements Stage {
+public class FilterStage extends AbstractFilterStage<FilterSpecification> {
+    public FilterStage(final FilterSpecification specification) {
+        super(specification);
+    }
 }

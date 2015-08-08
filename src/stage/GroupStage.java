@@ -1,9 +1,9 @@
 package stage;
 
-import api.Stage;
+import specification.GroupSpecification;
 
-/**
- * Created by aparansky on 8/6/15.
- */
-public class GroupStage implements Stage {
+public class GroupStage extends AbstractFilterStage<GroupSpecification> {
+    public GroupStage(final GroupSpecification specification) {
+        super(specification);
+    }
 }
