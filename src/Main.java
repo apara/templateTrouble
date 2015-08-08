@@ -6,6 +6,7 @@ import builder.GroupStageBuilder;
 import specification.FilterSpecification;
 import specification.GroupSpecification;
 import stage.FilterStage;
+import stage.GroupStage;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,34 +44,18 @@ public class Main {
             builders =
                 new LinkedList<>();
 
-        StageBuilder<FilterSpecification, FilterStage>
+        FilterStageBuilder
             filterStageBuilder =
                 new FilterStageBuilder();
 
-        StageBuilder<? extends Specification, ? extends Stage>
+        StageBuilder<GroupSpecification, GroupStage>
             groupStageBuilder =
                 new GroupStageBuilder();
-
-        //Attempt 0
-        //
-        builders.add(filterStageBuilder);  // <-- DOES NOT COMPILE
-        builders.add(groupStageBuilder);   // <-- DOES NOT COMPILE
 
         //Attempt 1
         //
         add(builders, filterStageBuilder);
         add(builders, groupStageBuilder);
-
-        //Attempt 2
-        //
-        add2(builders, filterStageBuilder);  // <-- DOES NOT COMPILE
-        add2(builders, groupStageBuilder);   // <-- DOES NOT COMPILE
-
-        //Attempt 3
-        //
-        add3(builders, filterStageBuilder);
-        add3(builders, groupStageBuilder);
-
 
         //2. Build stages
         //
@@ -95,21 +80,6 @@ public class Main {
         builders
             .add(builder);  // <-- DOES NOT COMPILE
     }
-
-    static
-    <SPEC extends Specification, STAGE extends Stage, BUILDER extends StageBuilder<? super SPEC,? super STAGE>>
-    void add2(final Collection<? super BUILDER> builders, final BUILDER builder){ //StageBuilder<? super SPEC, ? super STAGE> builder) {
-        builders
-            .add(builder);
-    }
-
-    static
-    <SPEC extends Specification, STAGE extends Stage, BUILDER extends StageBuilder<?,?>>
-    void add3(final Collection<? extends StageBuilder<? super SPEC, ? super STAGE>> builders, final BUILDER builder){ //StageBuilder<? super SPEC, ? super STAGE> builder) {
-        builders
-            .add(builder);  // <-- DOES NOT COMPILE
-    }
-
 
     static
     <STAGE extends Stage, SPEC extends Specification>
