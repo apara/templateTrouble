@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 /**
  * Help me understand generic by making the main method work WITHOUT:
  *
- * 1. castring
- * 2. rawtype
+ * 1. casting
+ * 2. rawtypes
  * 3. rawtype warnings or any other warnings, all types must be properly specified
  * 3. without suppressing any warnings
  *
