@@ -1,9 +1,9 @@
 package specification;
 
-import api.Specifications;
+import api.Specification;
 
 /**
  * Created by aparansky on 8/7/15.
  */
-public class FilterSpecifications implements Specifications {
+public class FilterSpecifications implements Specification {
 }

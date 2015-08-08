@@ -1,13 +1,13 @@
 package builder;
 
-import api.Specifications;
+import api.Specification;
 import api.Stage;
 import api.StageBuilder;
 
 /**
  * Created by aparansky on 8/6/15.
  */
-public abstract class AbstractStageBuilder<SPEC extends Specifications, STAGE extends Stage> implements StageBuilder<SPEC, STAGE> {
+public abstract class AbstractStageBuilder<SPEC extends Specification, STAGE extends Stage> implements StageBuilder<SPEC, STAGE> {
     private Class<? extends SPEC>
         specClass;
 
