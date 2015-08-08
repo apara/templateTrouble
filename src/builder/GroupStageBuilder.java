@@ -1,19 +1,19 @@
 package builder;
 
-import specification.GroupSpecifications;
+import specification.GroupSpecification;
 import stage.GroupStage;
 
 /**
  * Created by aparansky on 8/6/15.
  */
-public class GroupStageBuilder extends AbstractStageBuilder<GroupSpecifications, GroupStage> {
+public class GroupStageBuilder extends AbstractStageBuilder<GroupSpecification, GroupStage> {
 
     public GroupStageBuilder() {
-        super(GroupSpecifications.class);
+        super(GroupSpecification.class);
     }
 
     @Override
-    public GroupStage build(final GroupSpecifications specifications) {
+    public GroupStage build(final GroupSpecification specifications) {
         return
             new GroupStage();
     }

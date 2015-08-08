@@ -3,12 +3,15 @@ import api.Stage;
 import api.StageBuilder;
 import builder.FilterStageBuilder;
 import builder.GroupStageBuilder;
-import specification.FilterSpecifications;
-import specification.GroupSpecifications;
+import specification.FilterSpecification;
+import specification.GroupSpecification;
+import stage.FilterStage;
+import stage.GroupStage;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -16,81 +19,70 @@ public class Main {
 
         //Create the builder list
         //
-        final Collection<StageBuilder<? extends Specification,? extends Stage>>
+        final Collection<? extends StageBuilder<? extends Specification, ? extends Stage>>
             builders =
                 new LinkedList<>();
 
-        builders.add(new FilterStageBuilder());
-        builders.add(new GroupStageBuilder());
+        StageBuilder<FilterSpecification, FilterStage>
+            filterStageBuilder =
+                new FilterStageBuilder();
+
+        StageBuilder<GroupSpecification, GroupStage>
+            groupStageBuilder =
+                new GroupStageBuilder();
+
+        builders.add(filterStageBuilder);
+        builders.add(groupStageBuilder);
+
+        addBuilder(builders, filterStageBuilder);
+        addBuilder(builders, groupStageBuilder);
 
         final Collection<Stage>
             result =
                 build(
-                    (Collection<StageBuilder<Specification,Stage>>) (Object) builders,
+                    builders,
                     Arrays.asList(
-                        new FilterSpecifications(),
-                        new GroupSpecifications()
+                        new FilterSpecification(),
+                        new GroupSpecification()
                     )
                 );
 
         System.out.println("Created stages: " + result.size());
     }
 
+    //<T extends Juicy<? super T>> List<Juice<? super T>> squeezeSuperExtends(List<? extends T> fruits);
+
+    public static
+    <T extends StageBuilder<? extends Specification, ? extends Stage>>
+    void addBuilder(final Collection<? super T> collection, final T builder) {
+        collection.add(builder);
+    }
 
 
     static
-    //<SPEC extends Specification, STAGE extends Stage>
-    //Collection<Stage> build(final Collection<StageBuilder<? extends SPEC,? extends STAGE>> builders,  final Collection <? extends Specification> specifications) {
-    Collection<Stage> build(final Collection<StageBuilder<Specification,Stage>> builders,  final Collection <Specification> specifications) {
-        final Collection<Stage>
-            result =
-                new LinkedList<>();
-
-        for (final Specification spec : specifications) {
-            final StageBuilder<Specification, Stage>
-                builder =
-
-                    builders
-                        .stream()
-                        .filter(
-                            b ->
-                                canBuild(
-                                    b,
-                                    spec
-                                )
-                        )
-                        .findFirst()
-                        .orElseThrow(
-                            () ->
-                                new RuntimeException(
-                                    "Builder not found for " + spec
-                                )
-                        );
-
-
-            result
-                .add(
-                    build(
-                        builder,
-                        spec
-                    )
+    <STAGE extends Stage, SPEC extends Specification, BUILDER extends StageBuilder<? extends SPEC, ? extends STAGE>>
+    Collection<? extends STAGE> build(final Collection<? super BUILDER> builders, final Collection <? super SPEC> specifications) {
+        return
+            specifications
+                .stream()
+                .map(
+                    specification ->
+                        builders
+                            .stream()
+                            .filter(
+                                builder ->
+                                    builder.canBuild(specification)
+                            )
+                            .findFirst()
+                            .orElseThrow(
+                                RuntimeException::new
+                            )
+                            .build(
+                                specification
+                            )
+                )
+                .collect(
+                    Collectors.toList()
                 );
-        }
-
-        return
-            result;
-    }
-
-    static
-    boolean canBuild(final StageBuilder<Specification, Stage> builder, final Specification spec) {
-        return
-            builder.canBuild(spec);
-    }
-
-    static
-    <SPEC extends Specification, STAGE extends Stage>
-    STAGE build(final StageBuilder<SPEC, STAGE> builder, final SPEC spec) {
-        return
-            builder.build(spec);
     }
 }

@@ -1,19 +1,19 @@
 package builder;
 
-import specification.FilterSpecifications;
+import specification.FilterSpecification;
 import stage.FilterStage;
 
 /**
  * Created by aparansky on 8/6/15.
  */
-public class FilterStageBuilder extends AbstractStageBuilder<FilterSpecifications, FilterStage> {
+public class FilterStageBuilder extends AbstractStageBuilder<FilterSpecification, FilterStage> {
 
     public FilterStageBuilder() {
-        super(FilterSpecifications.class);
+        super(FilterSpecification.class);
     }
 
     @Override
-    public FilterStage build(final FilterSpecifications specifications) {
+    public FilterStage build(final FilterSpecification specifications) {
         return
             new FilterStage();
     }
