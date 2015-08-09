@@ -14,15 +14,8 @@ import java.util.stream.Collectors;
 
 
 /**
- * Help me understand generic by making the main method work WITHOUT:
- *
- * 1. casting
- * 2. rawtypes
- * 3. rawtype warnings or any other warnings, all types must be properly specified
- * 3. without suppressing any warnings
- *
- * In essence, make it a clean compile and run.  You are the Java Generics expert, show me how it's done.  Help me
- * understand what I am missing here.
+ * See complete discussion of the issue here:
+ * http://stackoverflow.com/questions/31887042/not-sure-how-to-fix-this-issue-with-java-generics
  *
  */
 
