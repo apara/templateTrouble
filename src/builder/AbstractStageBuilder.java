@@ -4,7 +4,10 @@ import api.Specification;
 import api.Stage;
 import api.StageBuilder;
 
-public abstract class AbstractStageBuilder<SPEC extends Specification, STAGE extends Stage> implements StageBuilder<SPEC, STAGE> {
+import java.util.Optional;
+import java.util.function.Supplier;
+
+public abstract class AbstractStageBuilder<SPEC extends Specification, STAGE extends Stage> implements StageBuilder<STAGE> {
     private Class<? extends SPEC>
         specClass;
 
@@ -13,8 +16,13 @@ public abstract class AbstractStageBuilder<SPEC extends Specification, STAGE ext
     }
 
     @Override
-    public boolean canBuild(final SPEC specs) {
+    public Optional<Supplier<STAGE>> supplier(final Specification specification) {
+
         return
-            specClass.isAssignableFrom(specs.getClass());
+            specClass.isAssignableFrom(specification.getClass())
+                ? Optional.of(() -> build(specClass.cast(specification)))
+                : Optional.empty();
     }
+
+    protected abstract STAGE build (SPEC specification);
 }

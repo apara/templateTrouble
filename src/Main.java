@@ -1,16 +1,15 @@
 import api.Specification;
 import api.Stage;
 import api.StageBuilder;
-import builder.AbstractStageBuilder;
 import builder.FilterStageBuilder;
 import builder.GroupStageBuilder;
 import specification.FilterSpecification;
 import specification.GroupSpecification;
-import stage.GroupStage;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -40,27 +39,12 @@ public class Main {
 
         //1. Create the builder list
         //
-        final Collection<StageBuilder<Specification, Stage>>
+        final Collection<StageBuilder<? extends Stage>>
             builders =
                 new LinkedList<>();
 
-        FilterStageBuilder
-            filterStageBuilder =
-                new FilterStageBuilder();
-
-        StageBuilder<GroupSpecification, GroupStage>
-            groupStageBuilder =
-                new GroupStageBuilder();
-
-        //Attempt 1
-        //
-        add(builders, filterStageBuilder); // <-- DOES NOT COMPILE
-        add(builders, groupStageBuilder); // <-- DOES NOT COMPILE
-
-        //Attempt 2
-        //
-        add2(builders, filterStageBuilder);  // <-- COMPILES FINE
-        add2(builders, groupStageBuilder); // <-- COMPILES FINE
+        builders.add(new FilterStageBuilder());
+        builders.add(new GroupStageBuilder());
 
 
         //2. Build stages
@@ -81,23 +65,7 @@ public class Main {
     }
 
     static
-    <SPEC extends Specification, STAGE extends Stage, BUILDER extends AbstractStageBuilder<? extends SPEC, ? extends STAGE>>
-    void add(final Collection<? super BUILDER>  builders, final BUILDER builder) {
-        builders
-            .add(builder);  // <-- COMPILES FINE
-    }
-
-    static
-    <SPEC extends Specification, STAGE extends Stage, BUILDER extends StageBuilder<? extends SPEC, ? extends STAGE>>
-    void add2(final Collection<? extends BUILDER>  builders, final BUILDER builder) {
-        builders
-            .add(builder);  // <-- DOES NOT COMPILE
-    }
-
-
-    static
-    <STAGE extends Stage, SPEC extends Specification>
-    Collection<? extends Stage> build(final Collection<? extends StageBuilder<? super SPEC, ? super STAGE>> builders, final Collection <SPEC> specifications) {
+    Collection<? extends Stage> build(final Collection<StageBuilder<? extends Stage>> builders, final Collection <? extends Specification> specifications) {
         return
             specifications
                 .stream()
@@ -105,18 +73,19 @@ public class Main {
                     specification ->
                         builders
                             .stream()
-                            .filter(
+                            .map(
                                 builder ->
-                                    builder
-                                        .canBuild(specification)
+                                    builder.supplier(specification)
+                            )
+                            .filter(
+                                Optional::isPresent
                             )
                             .findFirst()
                             .orElseThrow(
                                 RuntimeException::new
                             )
-                            .build(
-                                specification
-                            )
+                            .get() //get to return supplier
+                            .get() //to execute supplier and retrieve the value
                 )
                 .collect(
                     Collectors.toList()
