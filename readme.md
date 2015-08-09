@@ -36,5 +36,5 @@ public interface StageBuilder<STAGE extends Stage> {
 Here, the STAGE is built right when the build method is invoked.  The repository was updated to reflect the first 
 version of the solution.
 
-See complete discussion of this the issue behind this repository here: 
+See complete discussion of this the issue here:
 http://stackoverflow.com/questions/31887042/not-sure-how-to-fix-this-issue-with-java-generics
