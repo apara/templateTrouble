@@ -1,11 +1,11 @@
 import api.Specification;
 import api.Stage;
 import api.StageBuilder;
+import builder.AbstractStageBuilder;
 import builder.FilterStageBuilder;
 import builder.GroupStageBuilder;
 import specification.FilterSpecification;
 import specification.GroupSpecification;
-import stage.FilterStage;
 import stage.GroupStage;
 
 import java.util.Arrays;
@@ -54,8 +54,14 @@ public class Main {
 
         //Attempt 1
         //
-        add(builders, filterStageBuilder);
-        add(builders, groupStageBuilder);
+        add(builders, filterStageBuilder); // <-- DOES NOT COMPILE
+        add(builders, groupStageBuilder); // <-- DOES NOT COMPILE
+
+        //Attempt 2
+        //
+        add2(builders, filterStageBuilder);  // <-- COMPILES FINE
+        add2(builders, groupStageBuilder); // <-- COMPILES FINE
+
 
         //2. Build stages
         //
@@ -75,11 +81,19 @@ public class Main {
     }
 
     static
-    <SPEC extends Specification, STAGE extends Stage, BUILDER extends StageBuilder<?,?>>
-    void add(final Collection<? extends StageBuilder<? super SPEC, ? super STAGE>> builders, final BUILDER builder){ //StageBuilder<? super SPEC, ? super STAGE> builder) {
+    <SPEC extends Specification, STAGE extends Stage, BUILDER extends AbstractStageBuilder<? extends SPEC, ? extends STAGE>>
+    void add(final Collection<? super BUILDER>  builders, final BUILDER builder) {
+        builders
+            .add(builder);  // <-- COMPILES FINE
+    }
+
+    static
+    <SPEC extends Specification, STAGE extends Stage, BUILDER extends StageBuilder<? extends SPEC, ? extends STAGE>>
+    void add2(final Collection<? extends BUILDER>  builders, final BUILDER builder) {
         builders
             .add(builder);  // <-- DOES NOT COMPILE
     }
+
 
     static
     <STAGE extends Stage, SPEC extends Specification>
